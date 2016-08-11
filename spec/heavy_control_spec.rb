@@ -16,7 +16,7 @@ describe HeavyControl do
     end
 
     it 'cannot autoload files whithin implicit context folders' do
-      expect { ClassInsideImplicitContext }.to raise_error NameError
+      expect { ClassInsideIgnoreFolder }.to raise_error NameError
     end
 
     it 'loads HeavyControl::Railtie' do
@@ -54,6 +54,24 @@ describe HeavyControl do
 
       expect(HeavyControl.config[:debug]).to eq false
       expect(HeavyControl.config[:ignore_subfolders]).to eq []
+    end
+  end
+
+  context 'ignore subfolders feature' do
+    before do
+      HeavyControl.config { reset! }
+    end
+
+    it 'works for root context' do
+      HeavyControl.config { ignore_subfolder 'ignore_me' }
+
+      expect { ClassInsideIgnoreFolder }.to_not raise_error
+    end
+
+    it 'works when ignore folder inside normal folders' do
+      HeavyControl.config { ignore_subfolder 'deep_ignore' }
+
+      expect { ContextA::ContextB::ClassInsideDeepIgnoreFolder }.to_not raise_error
     end
   end
 end
