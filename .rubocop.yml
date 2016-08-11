@@ -12,3 +12,7 @@ Style/Documentation:
 
 Style/ClassAndModuleChildren:
   Enabled: false
+
+Style/FileName:
+  Exclude:
+    - Appraisals

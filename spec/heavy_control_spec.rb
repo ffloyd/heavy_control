@@ -20,7 +20,7 @@ describe HeavyControl do
     end
 
     it 'loads HeavyControl::Railtie' do
-      RailsFive::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
+      RailsApp::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
     end
 
     it 'RequiredClass loaded and is not under Rails autoloading' do
