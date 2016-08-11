@@ -6,7 +6,7 @@ describe HeavyControl do
     expect(HeavyControl::VERSION).not_to be nil
   end
 
-  it 'does something useful' do
-    expect(false).to eq(true)
+  it 'rails autoloading works' do
+    expect { ApplicationController }.to_not raise_error
   end
 end
