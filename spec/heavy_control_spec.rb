@@ -23,4 +23,37 @@ describe HeavyControl do
       RailsFive::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
     end
   end
+
+  context 'configuration' do
+    before do
+      HeavyControl.config { reset! }
+    end
+
+    it 'sets debug' do
+      HeavyControl.config { debug }
+
+      expect(HeavyControl.config[:debug]).to eq true
+    end
+
+    it 'adds ignore subfolders' do
+      HeavyControl.config do
+        ignore_subfolder 'operations'
+        ignore_subfolder 'cells'
+      end
+
+      expect(HeavyControl.config[:ignore_subfolders]).to eq %w(operations cells)
+    end
+
+    it 'resets to default' do
+      HeavyControl.config do
+        debug
+        ignore_subfolder 'operations'
+
+        reset!
+      end
+
+      expect(HeavyControl.config[:debug]).to eq false
+      expect(HeavyControl.config[:ignore_subfolders]).to eq []
+    end
+  end
 end
