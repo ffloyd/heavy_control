@@ -22,6 +22,10 @@ describe HeavyControl do
     it 'loads HeavyControl::Railtie' do
       RailsFive::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
     end
+
+    it 'has enabled debug' do
+      expect(ActiveSupport::Dependencies.singleton_class.ancestors).to include HeavyControl::Extensions::Logging
+    end
   end
 
   context 'configuration' do
