@@ -6,7 +6,17 @@ describe HeavyControl do
     expect(HeavyControl::VERSION).not_to be nil
   end
 
-  it 'rails autoloading works' do
-    expect { ApplicationController }.to_not raise_error
+  context 'rails dummy app' do
+    it 'autoloading works' do
+      expect { ApplicationController }.to_not raise_error
+    end
+
+    it 'automatically enables autoloading for new dir inside app' do
+      expect { RootClass }.to_not raise_error
+    end
+
+    it 'cannot autoload files whithin implicit context folders' do
+      expect { ClassInsideImplicitContext }.to raise_error NameError
+    end
   end
 end
