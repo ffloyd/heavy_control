@@ -15,12 +15,21 @@ describe HeavyControl do
       expect { RootClass }.to_not raise_error
     end
 
-    it 'cannot autoload files whithin implicit context folders' do
+    it 'cannot autoload files whithin "ignore" folders' do
       expect { ClassInsideIgnoreFolder }.to raise_error NameError
     end
 
     it 'loads HeavyControl::Railtie' do
       RailsFive::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
+    end
+
+    it 'RequiredClass loaded and is not under Rails autoloading' do
+      expect { RequiredClass }.to_not raise_error
+      expect(ActiveSupport::Dependencies.loaded).to_not include "#{Rails.root}/lib/required_class"
+    end
+
+    it 'ContextA::ContextB::RequiredClass parent check: top-level RequiredClass is not used instead of ContextA::RequiredClass' do
+      expect(ContextA::ContextB::RequiredClass.ancestors).to include ContextA::RequiredClass
     end
 
     it 'has enabled debug' do
