@@ -18,5 +18,9 @@ describe HeavyControl do
     it 'cannot autoload files whithin implicit context folders' do
       expect { ClassInsideImplicitContext }.to raise_error NameError
     end
+
+    it 'loads HeavyControl::Railtie' do
+      RailsFive::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
+    end
   end
 end
