@@ -1,5 +1,8 @@
 AllCops:
   TargetRubyVersion: 2.3
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/dummies/**/*'
 
 Rails:
   Enabled: true

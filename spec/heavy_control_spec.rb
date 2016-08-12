@@ -6,85 +6,73 @@ describe HeavyControl do
     expect(HeavyControl::VERSION).not_to be nil
   end
 
+  # this context tests default rails behaviour. It's useful when we first time run tests against new rails/ruby version.
   context 'rails dummy app' do
     it 'autoloading works' do
       expect { ApplicationController }.to_not raise_error
     end
 
+    # you should create app/test_me/autoloading_test_class.rb inside new dummy app
     it 'automatically enables autoloading for new dir inside app' do
-      expect { RootClass }.to_not raise_error
-    end
-
-    it 'cannot autoload files whithin "ignore" folders' do
-      expect { ClassInsideIgnoreFolder }.to raise_error NameError
+      expect { AutoloadingTestClass }.to_not raise_error
     end
 
     it 'loads HeavyControl::Railtie' do
       RailsApp::Application.instance.railties.one? { |rt| rt.class == HeavyControl::Railtie }
     end
 
-    it 'RequiredClass loaded and is not under Rails autoloading' do
-      expect { RequiredClass }.to_not raise_error
-      expect(ActiveSupport::Dependencies.loaded).to_not include "#{Rails.root}/lib/required_class"
-    end
-
-    it 'ContextA::ContextB::RequiredClass parent check: top-level RequiredClass is not used instead of ContextA::RequiredClass' do
-      expect(ContextA::ContextB::RequiredClass.ancestors).to include ContextA::RequiredClass
-    end
-
+    # you should enable debug in heavy_control.rb initializer inside new dummy app
+    # it's useful when debugging
     it 'has enabled debug' do
       expect(ActiveSupport::Dependencies.singleton_class.ancestors).to include HeavyControl::Extensions::Logging
     end
   end
 
-  context 'configuration' do
-    before do
-      HeavyControl.config { reset! }
-    end
+  # test situations helpers
+  # rubocop:disable Lint/Void
+  context 'situation helpers:' do
+    context '.external_class' do
+      external_class 'ExternalClass'
+      external_class 'ChildExternalClass', 'ExternalClass'
 
-    it 'sets debug' do
-      HeavyControl.config { debug }
-
-      expect(HeavyControl.config[:debug]).to eq true
-    end
-
-    it 'adds ignore subfolders' do
-      HeavyControl.config do
-        ignore_subfolder 'operations'
-        ignore_subfolder 'cells'
+      it 'creates classes' do
+        expect { ExternalClass }.to_not raise_error
+        expect { ExternalClass::ChildExternalClass }.to_not raise_error
       end
 
-      expect(HeavyControl.config[:ignore_subfolders]).to eq %w(operations cells)
+      it 'does not involve autoloading' do
+        ExternalClass
+        ExternalClass::ChildExternalClass
+        expect(ActiveSupport::Dependencies.loaded).to be_empty
+      end
     end
 
-    it 'resets to default' do
-      HeavyControl.config do
-        debug
-        ignore_subfolder 'operations'
+    context '.situation' do
+      situation :one_file
 
-        reset!
+      it 'adds class to autoload' do
+        expect { AloneClass }.to_not raise_error
       end
 
-      expect(HeavyControl.config[:debug]).to eq false
-      expect(HeavyControl.config[:ignore_subfolders]).to eq []
+      it 'involves autoloading' do
+        AloneClass
+        expect(ActiveSupport::Dependencies.loaded).to_not be_empty
+      end
+
+      # we need Rails config's `cache_classes = true` to make this works.
+      it 'clears loaded stuff between requests and ActiveSupport::Dependencies.clear works as expected' do
+        expect(ActiveSupport::Dependencies.loaded).to be_empty
+        expect(defined?(AloneClass)).to be_falsey
+
+        AloneClass
+        expect(ActiveSupport::Dependencies.loaded).to_not be_empty
+
+        ActiveSupport::Dependencies.clear
+        expect(ActiveSupport::Dependencies.loaded).to be_empty
+        AloneClass
+        expect(ActiveSupport::Dependencies.loaded).to_not be_empty
+      end
     end
   end
-
-  context 'ignore subfolders feature' do
-    before do
-      HeavyControl.config { reset! }
-    end
-
-    it 'works for root context' do
-      HeavyControl.config { ignore_subfolder 'ignore_me' }
-
-      expect { ClassInsideIgnoreFolder }.to_not raise_error
-    end
-
-    it 'works when ignore folder inside normal folders' do
-      HeavyControl.config { ignore_subfolder 'deep_ignore' }
-
-      expect { ContextA::ContextB::ClassInsideDeepIgnoreFolder }.to_not raise_error
-    end
-  end
+  # rubocop:enable Lint/Void
 end
