@@ -31,13 +31,21 @@ describe HeavyControl do
   # test situations helpers
   # rubocop:disable Lint/Void
   context 'situation helpers:' do
-    context '.external_class' do
-      external_class 'ExternalClass'
-      external_class 'ChildExternalClass', 'ExternalClass'
+    context '.external_const' do
+      external_const 'ExternalClass'
+      external_const 'ChildExternalClass', 'ExternalClass'
+      external_const 'ExternalModule', as_module: true
 
       it 'creates classes' do
         expect { ExternalClass }.to_not raise_error
         expect { ExternalClass::ChildExternalClass }.to_not raise_error
+        expect(ExternalClass).to be_a Class
+        expect(ExternalClass::ChildExternalClass).to be_a Class
+      end
+
+      it 'creates modules' do
+        expect { ExternalModule }.to_not raise_error
+        expect(ExternalModule.class).to eq Module
       end
 
       it 'does not involve autoloading' do

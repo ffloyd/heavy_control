@@ -23,15 +23,15 @@ module Situations
       end
     end
 
-    def external_class(class_name, scope = Object)
+    def external_const(const_name, scope = Object, as_module: false)
       scope_name = scope.to_s
 
       around(:each) do |example|
         scope_to_use = scope_name.constantize
 
-        scope_to_use.const_set(class_name, Class.new)
+        scope_to_use.const_set(const_name, as_module ? Module.new : Class.new)
         example.run
-        scope_to_use.const_unset(class_name)
+        scope_to_use.const_unset(const_name)
       end
     end
   end
