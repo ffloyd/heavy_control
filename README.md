@@ -1,5 +1,7 @@
 # HeavyControl
 
+[![Build Status](https://travis-ci.org/ffloyd/heavy_control.svg?branch=master)](https://travis-ci.org/ffloyd/heavy_control)
+
 HeavyControl adds tools which allows to modify rails autoloading logic.
 
 ## Installation
@@ -23,8 +25,11 @@ Create initializer and place HeavyControl config inside:
 HeavyControl.config do
   # example config:
   ignore_subfolder 'operations'
+  always_load 'SomeClass'
 end
 ```
+
+Detailed documentation will be soon.
 
 ## Development
 
