@@ -3,6 +3,7 @@ AllCops:
   Exclude:
     - 'vendor/**/*'
     - 'spec/dummies/**/*'
+    - 'gemfiles/**/*'
 
 Rails:
   Enabled: true
