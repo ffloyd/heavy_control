@@ -1,5 +1,6 @@
 # HeavyControl
 
+[![Gem Version](https://badge.fury.io/rb/heavy_control.svg)](http://badge.fury.io/rb/heavy_control)
 [![Build Status](https://travis-ci.org/ffloyd/heavy_control.svg?branch=master)](https://travis-ci.org/ffloyd/heavy_control)
 [![Code Climate](https://codeclimate.com/github/ffloyd/heavy_control.svg)](https://codeclimate.com/github/ffloyd/heavy_control)
 [![git.legal](https://git.legal/projects/1859/badge.svg "Number of libraries approved")](https://git.legal/projects/1859)
@@ -94,7 +95,7 @@ You may write several names separated by comma.
 
 `always_load` differs from `require_dependency`. It explicitly resolves constant names on initalization via `constantize` (before other constants are loaded). Also it happens each reload in development.
 
-It seems to be a bit more accurate way than `require_dependency` because constant resolving involves rails autoloading mechanism without direct using of more "low-level" `require_dependency`. Also it guarantees that `ignore_subfolder` feature will work as expected.
+It seems to be a bit more accurate way than `require_dependency` because constant resolving involves Rails autoloading mechanism without direct using of more "low-level" `require_dependency`. Also it guarantees that `ignore_subfolder` feature will work as expected.
 
 ## Development
 
