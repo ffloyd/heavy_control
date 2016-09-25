@@ -16,7 +16,8 @@ module HeavyControl
     def reset!
       @config = {
         debug: false,
-        ignore_subfolders: []
+        ignore_subfolders: [],
+        always_load: []
       }
     end
 
@@ -26,6 +27,10 @@ module HeavyControl
 
     def ignore_subfolder(subfolder)
       @config[:ignore_subfolders] << subfolder
+    end
+
+    def always_load(*const_names)
+      @config[:always_load] += const_names
     end
   end
 end
