@@ -15,12 +15,6 @@ module HeavyControl
 
         nil
       end
-
-      private
-
-      def hc_log(msg)
-        Rails.logger.debug "HeavyControl: #{msg}"
-      end
     end
   end
 end
