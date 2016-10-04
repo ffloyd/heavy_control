@@ -60,6 +60,8 @@ HeavyControl: and found '/vagrant/app/models/organization.rb'
 HeavyControl: Require of load '/vagrant/app/models/organization' with const_path 'Organization'
 ```
 
+You may also turn off previously enabled debugging using `debug false`.
+
 ### Ignore subfolders
 
 Rails automatically adds all folders under `/app` into autoloading paths. When you use constant (class, module) first time autoloading will search for file
@@ -71,6 +73,24 @@ But sometimes (when we use [trailblazer](http://trailblazer.to/), as example) we
 # config/initializers/heavy_control.rb
 HeavyControl.config do
   ignore_subfolder 'subfolder'
+end
+```
+
+For example lets write substitution to [trailblazer-loader](https://github.com/trailblazer/trailblazer-loader). README of this gem describes three naming and directory layout styles: _Compound-Singular_, _Explicit-Singular_ and _Explicit-Plural_.
+
+#### Compound-Singular
+
+It's very non-rails style. It forces us to keep from one to several class definitions in a single file. If you are using Rails I suggest you to avoid this. Currently, heavy_control doesn't support any code-placement styles where we put several classes inside one file.
+
+#### Explicit-Singular and Explicit-Plural
+
+This directory layout styles will work with classic rails autoloading correctly, except 'operation' and 'operations' folders. Given directories doesn't affect class namespaces. So, we will easy express this rule via `ignore_subfolder` option.
+
+```ruby
+# config/initializers/heavy_control.rb
+HeavyControl.config do
+  ignore_subfolder 'operation'  # singular
+  ignore_subfolder 'operations' # plural
 end
 ```
 
@@ -90,6 +110,8 @@ HeavyControl.config do
   always_load 'YourContext::YourClass'
 end
 ```
+
+In other words, for `always_load` you should use constant name which displays right after 'referenced by' words in a warning text.
 
 You may write several names separated by comma.
 
