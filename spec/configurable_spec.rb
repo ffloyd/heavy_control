@@ -11,6 +11,16 @@ describe HeavyControl::Configurable do
     expect(HeavyControl.config[:debug]).to eq true
   end
 
+  it 'unsets debug' do
+    HeavyControl.config do
+      reset!
+      debug
+      debug false
+    end
+
+    expect(HeavyControl.config[:debug]).to eq false
+  end
+
   it 'adds ignore subfolders' do
     HeavyControl.config do
       ignore_subfolder 'operations'

@@ -21,8 +21,8 @@ module HeavyControl
       }
     end
 
-    def debug(_value = true)
-      @config[:debug] = true
+    def debug(value = true)
+      @config[:debug] = value
     end
 
     def ignore_subfolder(subfolder)
