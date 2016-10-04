@@ -3,6 +3,7 @@
 [![Gem Version](https://badge.fury.io/rb/heavy_control.svg)](http://badge.fury.io/rb/heavy_control)
 [![Build Status](https://travis-ci.org/ffloyd/heavy_control.svg?branch=master)](https://travis-ci.org/ffloyd/heavy_control)
 [![Code Climate](https://codeclimate.com/github/ffloyd/heavy_control.svg)](https://codeclimate.com/github/ffloyd/heavy_control)
+[![Test Coverage](https://codeclimate.com/github/ffloyd/heavy_control/badges/coverage.svg)](https://codeclimate.com/github/ffloyd/heavy_control/coverage)
 [![git.legal](https://git.legal/projects/1859/badge.svg "Number of libraries approved")](https://git.legal/projects/1859)
 
 HeavyControl adds tools which allows you to modify Rails autoloading logic.

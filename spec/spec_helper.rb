@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 ENV['RAILS_ENV'] = 'development' # because we need reloading stuff
 
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'heavy_control'
 require 'pry'
