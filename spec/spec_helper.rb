@@ -2,8 +2,8 @@
 
 ENV['RAILS_ENV'] = 'development' # because we need reloading stuff
 
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+require 'simplecov'
+SimpleCov.start
 
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'heavy_control'
@@ -22,3 +22,6 @@ RailsApp =  case Rails::VERSION::MAJOR # rubocop:disable Style/ConstantName
               require_relative 'dummies/rails42/config/environment'
               Rails42
             end
+
+require 'rails/console/app'
+RailsConsole = Class.new { extend Rails::ConsoleMethods }

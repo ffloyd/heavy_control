@@ -20,10 +20,7 @@ describe HeavyControl::ExplicitLoader do
           always_load 'CtxA::Parent'
         end
 
-        # for specs we need explicitly initiate reloading mechanism =(
-        # this code from Rails::ConsoleMethods#reload!
-        ActionDispatch::Reloader.cleanup!
-        ActionDispatch::Reloader.prepare!
+        RailsConsole.reload!
       end
 
       it 'disappears' do
