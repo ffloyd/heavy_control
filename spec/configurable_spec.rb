@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'spec_helper'
 
 describe HeavyControl::Configurable do
@@ -27,7 +28,7 @@ describe HeavyControl::Configurable do
       ignore_subfolder 'cells'
     end
 
-    expect(HeavyControl.config[:ignore_subfolders]).to eq %w(operations cells)
+    expect(HeavyControl.config[:ignore_subfolders]).to eq %w[operations cells]
   end
 
   it 'resets to default' do
@@ -50,6 +51,6 @@ describe HeavyControl::Configurable do
       always_load 'Several', 'Args'
     end
 
-    expect(HeavyControl.config[:always_load]).to eq %w(OneArg Several Args)
+    expect(HeavyControl.config[:always_load]).to eq %w[OneArg Several Args]
   end
 end

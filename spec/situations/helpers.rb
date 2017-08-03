@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Situations
   module Helpers
     def self.extended(mod)
