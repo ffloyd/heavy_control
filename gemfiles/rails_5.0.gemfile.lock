@@ -1,7 +1,7 @@
 PATH
   remote: ..
   specs:
-    heavy_control (0.1.2)
+    heavy_control (0.1.3)
       rails (> 4)
 
 GEM
