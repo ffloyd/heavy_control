@@ -1,3 +1,5 @@
+# The repo is no longer maintained and probably not really needed anymore. Consider to use [zeitwerk](https://github.com/fxn/zeitwerk) to tackle loading order problems.
+
 # HeavyControl
 
 [![Gem Version](https://badge.fury.io/rb/heavy_control.svg)](http://badge.fury.io/rb/heavy_control)
